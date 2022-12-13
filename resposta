@@ -1,0 +1,67 @@
+#instalando pacotes necessários
+from bs4 import BeautifulSoup
+import xml.etree.ElementTree as ET
+
+#importação do banco
+with open('feed.xml', 'r') as f:
+    data = f.read()
+tree = ET.parse('feed.xml')
+root = tree.getroot()
+print(root)
+
+#removendo o primeiro produto de Calçados: Chinelo Slide
+root[4].remove(root[4][0])
+root[4].remove(root[4][1])
+root[4].remove(root[4][2])
+root[4].remove(root[4][3])
+root[4].remove(root[4][4])
+root[4].remove(root[4][5])
+tree.write('output2.xml')
+
+#removendo o segundo produto de Calçados: Sandálias deslizantes
+root[5].remove(root[5][0])
+root[5].remove(root[5][1])
+root[5].remove(root[5][2])
+root[5].remove(root[5][3])
+root[5].remove(root[5][4])
+root[5].remove(root[5][5])
+tree.write('output2.xml')
+
+#removendo o terceiro produto de Calçados: Tenis de Corrida
+root[6].remove(root[6][0])
+root[6].remove(root[6][1])
+root[6].remove(root[6][2])
+root[6].remove(root[6][3])
+root[6].remove(root[6][4])
+root[6].remove(root[6][5])
+tree.write('output2.xml')
+
+#Modificando o nome dos produtos 
+for title in root.findall('title'):
+    title = title.find('title')
+    if title.text == 'Calca leging convencional':
+        title.text = ' Calça legging simples'
+    print(title.text)
+    
+#Modificando o nome dos produtos 
+for title2 in root.findall('title'):
+    title2 = title2.find('title')
+    if title2.text == 'oculos de sol':
+        title2.text = 'Óculos de sol - Unissex'
+    print(title2.text)
+    
+#Modificando os links das imagens
+for image_link in root.findall('image_link'):
+    image_link = image_link.find('image_link')
+    if image_link.text == 'www.loja.com.br/imagens':
+        image_link.text = 'www.loja.com.br/imagens/gorro-bordado-minimalista.jpg'
+    print(image_link.text)
+
+#Modificando os links das imagens
+for image_link2 in root.findall('image_link'):
+    image_link2 = image_link.find('image_link')
+    if image_link2.text == 'www.loja.com.br/imagens/calca-legging-simples.mp4"':
+        image_link2.text = 'www.loja.com.br/imagens/calca-legging-simples.jpg"'
+    print(image_link.text)
+
+tree.write('novo_xml.xml')
